@@ -1382,7 +1382,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1094182987}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 500, y: 1, z: 500}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1581,6 +1581,34 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -2.26
       objectReference: {fileID: 0}
+    - target: {fileID: 8083460170927368968, guid: 16e5f46c6db59c049bf8076909fb6192, type: 3}
+      propertyPath: OnBallGoalEnter.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8083460170927368968, guid: 16e5f46c6db59c049bf8076909fb6192, type: 3}
+      propertyPath: OnBallGoalEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8083460170927368968, guid: 16e5f46c6db59c049bf8076909fb6192, type: 3}
+      propertyPath: OnBallGoalEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1954496484}
+    - target: {fileID: 8083460170927368968, guid: 16e5f46c6db59c049bf8076909fb6192, type: 3}
+      propertyPath: OnBallGoalEnter.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8083460170927368968, guid: 16e5f46c6db59c049bf8076909fb6192, type: 3}
+      propertyPath: OnBallGoalEnter.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnBallGoalEnter
+      objectReference: {fileID: 0}
+    - target: {fileID: 8083460170927368968, guid: 16e5f46c6db59c049bf8076909fb6192, type: 3}
+      propertyPath: OnBallGoalEnter.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8083460170927368968, guid: 16e5f46c6db59c049bf8076909fb6192, type: 3}
+      propertyPath: OnBallGoalEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8546951417770518321, guid: 16e5f46c6db59c049bf8076909fb6192, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -1656,7 +1684,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1752212954}
-  m_LocalRotation: {x: 0.040936776, y: 0.46395284, z: -0.02146913, w: 0.8846531}
+  m_LocalRotation: {x: 0.04093678, y: 0.46395287, z: -0.021469133, w: 0.8846531}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

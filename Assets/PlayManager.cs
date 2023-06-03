@@ -9,6 +9,7 @@ public class PlayManager : MonoBehaviour
 
     bool isBallOutside;
     bool isBallTeleporting;
+    bool isGoal;
     Vector3 lastBallPosition;
     private void Update()
     {
@@ -25,8 +26,18 @@ public class PlayManager : MonoBehaviour
         camController.SetInputActive(inputActive);
     }
 
+    public void OnBallGoalEnter()
+    {
+        isGoal = true;
+        ballController.enabled = false;
+        // TODO player win window popup
+    }
+
     public void OnBallOutsise()
     {
+        if(isGoal)
+            return;
+
         if(isBallTeleporting == false) 
             Invoke("TeleportBallLastPosition", 3);
 

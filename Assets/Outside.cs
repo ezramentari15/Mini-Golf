@@ -11,7 +11,6 @@ public class Outside : MonoBehaviour
     {
         if(other.transform.CompareTag("Ball"))
         {
-            Debug.Log("OnBallEnter");
             OnBallEnter.Invoke();
         }
     }

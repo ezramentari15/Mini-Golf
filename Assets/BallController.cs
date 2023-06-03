@@ -6,14 +6,17 @@ using UnityEngine.EventSystems;
 
 public class BallController : MonoBehaviour , IPointerDownHandler
 {
-    [SerializeField] Collider col;
+    
     [SerializeField] Rigidbody rb;
     [SerializeField] float force;
-    // [SerializeField] LineRenderer aimLine;
+    [SerializeField] LineRenderer aimLine;
     [SerializeField] Transform aimWorld;
     bool shoot;
     bool shootingMode;
     float forceFactor;
+    Vector3 forceDirection;
+    Ray ray;
+    Plane plane;
 
     public bool ShootingMode { get => shootingMode; }
 
@@ -23,8 +26,9 @@ public class BallController : MonoBehaviour , IPointerDownHandler
         {
             if(Input.GetMouseButtonDown(button: 0))
             {
-                // aimLine.gameObject.SetActive(true);
+                aimLine.gameObject.SetActive(value: true);
                 aimWorld.gameObject.SetActive(value: true);
+                plane = new Plane(inNormal: Vector3.up,inPoint: this.transform.position);
             }
             else if(Input.GetMouseButton(button: 0))
             {
@@ -38,24 +42,28 @@ public class BallController : MonoBehaviour , IPointerDownHandler
                 // aimLine.transform.position = ballScreenPos;
                 // var positions = new Vector3[]{ballScreenPos,Input.mousePosition};
                 // aimLine.SetPositions(positions);
-                aimWorld.transform.position = this.transform.position;
-                var aimDirection = new Vector3(pointerDirection.x, 0, pointerDirection.y);
-                aimDirection = Camera.main.transform.localToWorldMatrix * aimDirection;
-                aimDirection.y = 0;
-                aimWorld.transform.forward = aimDirection.normalized;
+
+                // force direction
+                ray = Camera.main.ScreenPointToRay(pos: Input.mousePosition);
+                plane.Raycast(ray: ray,enter: out var distance);
+                forceDirection = (this.transform.position - ray.GetPoint(distance: distance));
+                forceDirection.Normalize();
 
                 // forc factor 
                 forceFactor = pointerDirection.magnitude * 2;
                 Debug.Log(message: forceFactor);
 
-                // force factor
-                Debug.Log(message: pointerDirection.normalized); 
+                // aim visual
+                aimWorld.transform.position = this.transform.position;
+                aimWorld.forward = forceDirection;
+                aimWorld.localScale = new Vector3(x: 1,y: 1,z: 0.05f + forceFactor);
+
             }
             else if(Input.GetMouseButtonUp(button: 0))
             {
                 shoot = true;
                 shootingMode = false;
-                // aimLine.gameObject.SetActive(false);
+                aimLine.gameObject.SetActive(value: false);
                 aimWorld.gameObject.SetActive(value: false);
             }
         }
@@ -66,9 +74,7 @@ public class BallController : MonoBehaviour , IPointerDownHandler
         if (shoot)
         {
             shoot = false;
-            Vector3 direction = Camera.main.transform.forward;
-            direction.y = 0;
-            rb.AddForce(force: direction * force * forceFactor, mode: ForceMode.Impulse);
+            rb.AddForce(force: forceDirection * force * forceFactor, mode: ForceMode.Impulse);
         }
 
         if(rb.velocity.sqrMagnitude < 0.01f && rb.velocity.sqrMagnitude > 0)

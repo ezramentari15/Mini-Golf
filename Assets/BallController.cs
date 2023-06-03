@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class BallController : MonoBehaviour , IPointerDownHandler
 {
-    
+
     [SerializeField] Rigidbody rb;
     [SerializeField] float force;
     [SerializeField] LineRenderer aimLine;
@@ -51,7 +51,6 @@ public class BallController : MonoBehaviour , IPointerDownHandler
 
                 // forc factor 
                 forceFactor = pointerDirection.magnitude * 2;
-                Debug.Log(message: forceFactor);
 
                 // aim visual
                 aimWorld.transform.position = this.transform.position;
@@ -90,6 +89,9 @@ public class BallController : MonoBehaviour , IPointerDownHandler
 
     void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
     {
+        if(this.IsMove())
+            return;
+
         shootingMode = true;
     }
 }

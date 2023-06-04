@@ -32,17 +32,6 @@ public class BallController : MonoBehaviour , IPointerDownHandler
             }
             else if(Input.GetMouseButton(button: 0))
             {
-                var mouseViewportPos = Camera.main.ScreenToViewportPoint(position: Input.mousePosition);
-                var ballViewportPos = Camera.main.WorldToViewportPoint(position: this.transform.position);
-                var ballScreenPos = Camera.main.WorldToScreenPoint(position: this.transform.position);
-                var pointerDirection = ballViewportPos = mouseViewportPos;
-                pointerDirection.z = 0;
-
-                // // draw aim
-                // aimLine.transform.position = ballScreenPos;
-                // var positions = new Vector3[]{ballScreenPos,Input.mousePosition};
-                // aimLine.SetPositions(positions);
-
                 // force direction
                 ray = Camera.main.ScreenPointToRay(pos: Input.mousePosition);
                 plane.Raycast(ray: ray,enter: out var distance);
@@ -50,6 +39,12 @@ public class BallController : MonoBehaviour , IPointerDownHandler
                 forceDirection.Normalize();
 
                 // forc factor 
+                var mouseViewportPos = Camera.main.ScreenToViewportPoint(position: Input.mousePosition);
+                var ballViewportPos = Camera.main.WorldToViewportPoint(position: this.transform.position);
+                var pointerDirection = ballViewportPos = mouseViewportPos;
+                pointerDirection.z = 0;
+                pointerDirection.z *= Camera.main.aspect;
+                pointerDirection.z = Mathf.Clamp(pointerDirection.z, -0.5f, 0.5f);
                 forceFactor = pointerDirection.magnitude * 2;
 
                 // aim visual
@@ -57,6 +52,16 @@ public class BallController : MonoBehaviour , IPointerDownHandler
                 aimWorld.forward = forceDirection;
                 aimWorld.localScale = new Vector3(x: 1,y: 1,z: 0.05f + forceFactor);
 
+
+                var ballScreenPos = Camera.main.WorldToScreenPoint(position: this.transform.position);
+                var mouseScreenPos = Input.mousePosition;
+                ballScreenPos.z = 1f;
+                mouseScreenPos.z = 1f;                
+                var positions = new Vector3[]{
+                    Camera.main.ScreenToWorldPoint(ballScreenPos),
+                    Camera.main.ScreenToWorldPoint(mouseScreenPos)};
+                aimLine.SetPositions(positions);
+                aimLine.endColor = Color.Lerp(Color.blue,Color.red,forceFactor);
             }
             else if(Input.GetMouseButtonUp(button: 0))
             {

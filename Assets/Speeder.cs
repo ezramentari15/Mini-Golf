@@ -21,9 +21,9 @@ public class Speeder : MonoBehaviour
     {
         if(isSpeeding == false && 
             other.transform.CompareTag(tag: "Ball") && 
-            other.transform.TryGetComponent<Rigidbody>(out var rb))
+            other.transform.TryGetComponent<BallController>(out var ball))
         {
-            rb.AddForce(force: force * this.transform.forward, mode: ForceMode.Impulse);
+            ball.AddForce(force * this.transform.forward, ForceMode.Impulse);
             isSpeeding = true;
             Invoke(methodName: "Reset", time: 0.3f);
         }

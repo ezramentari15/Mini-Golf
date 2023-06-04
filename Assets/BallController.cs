@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public class BallController : MonoBehaviour , IPointerDownHandler
 {
@@ -17,8 +18,12 @@ public class BallController : MonoBehaviour , IPointerDownHandler
     Vector3 forceDirection;
     Ray ray;
     Plane plane;
-
+    
     public bool ShootingMode { get => shootingMode; }
+    int shootCount;
+    public int ShootCount { get => shootCount; }
+
+    public UnityEvent<int> onBallShooted = new UnityEvent<int>();
 
     private void Update()
     {
@@ -78,18 +83,27 @@ public class BallController : MonoBehaviour , IPointerDownHandler
         if (shoot)
         {
             shoot = false;
-            rb.AddForce(force: forceDirection * force * forceFactor, mode: ForceMode.Impulse);
+            AddForce(forceDirection * force * forceFactor, ForceMode.Impulse);
+            shootCount += 1;
+            onBallShooted.Invoke(shootCount);
         }
 
-        if(rb.velocity.sqrMagnitude < 0.01f && rb.velocity.sqrMagnitude > 0)
+        if(rb.velocity.sqrMagnitude < 0.01f && rb.velocity.sqrMagnitude != 0)
         {
             rb.velocity = Vector3.zero;
+            rb.useGravity = false;
         }
     }
 
     public bool IsMove()
     {
         return rb.velocity != Vector3.zero;
+    }
+
+    public void AddForce(Vector3 force, ForceMode forceMode = ForceMode.Impulse)
+    {
+        rb.useGravity = true;
+        rb.AddForce(force, forceMode);
     }
 
     void IPointerDownHandler.OnPointerDown(PointerEventData eventData)

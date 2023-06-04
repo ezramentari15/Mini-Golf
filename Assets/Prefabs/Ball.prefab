@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 6748798784433204737}
-  force: 30
+  force: 80
   aimLine: {fileID: 0}
   aimWorld: {fileID: 0}
   onBallShooted:

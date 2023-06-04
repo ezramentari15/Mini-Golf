@@ -17,11 +17,12 @@ public class NextLevelButton : MonoBehaviour
         if(nextSceneBuildIndex == -1)
             this.gameObject.SetActive(false);
     }
+
     public void NextLevel()
     {
         var currentScene = SceneManager.GetActiveScene();
         int currentLevel = int.Parse(currentScene.name.Split("level")[1]);
         int nextLevel = currentLevel + 1;
-        SceneManager.LoadScene("level " + nextLevel);
+        SceneManager.LoadScene("level "+ nextLevel);
     }
 }

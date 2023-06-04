@@ -25,4 +25,10 @@ public class NextLevelButton : MonoBehaviour
         int nextLevel = currentLevel + 1;
         SceneManager.LoadScene("level "+ nextLevel);
     }
+    
+    public void Quit()
+    {
+        var currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene("MainMenu");
+    }
 }
